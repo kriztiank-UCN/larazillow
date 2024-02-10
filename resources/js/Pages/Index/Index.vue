@@ -1,7 +1,6 @@
 <template>
-    <div>Index</div>
+  <div>Index</div>
     <Link href="/hello">Show Page</Link>
-
     <div>The message is: {{ msg }}</div>
 </template>
 
@@ -11,4 +10,10 @@ defineProps({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<!-- <script>
+import MainLayout from "../../Layouts/MainLayout.vue";
+export default {
+    // Using inertia persistent layout...
+    layout: MainLayout,
+};
+</script> -->
