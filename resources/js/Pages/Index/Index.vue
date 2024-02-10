@@ -2,11 +2,13 @@
     <div>Index</div>
     <Link href="/hello">Show Page</Link>
 
-    The message is: {{ msg }}
+    <div>The message is: {{ msg }}</div>
 </template>
 
 <script setup>
-defineProps(['msg'])
+defineProps({
+    msg: String
+});
 </script>
 
 <style lang="scss" scoped></style>
