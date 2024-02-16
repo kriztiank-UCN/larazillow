@@ -5,6 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 
+// Common Resources:
+// index - Show all listings
+// show - Show single listing
+// create - Show form to create new listing
+// store - Store new listing in database
+// edit - Show form to edit listing
+// update - Update listing in database
+// destroy - Delete listing in database
+
 class ListingController extends Controller
 {
     /**
