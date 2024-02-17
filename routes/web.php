@@ -21,8 +21,8 @@ Route::get('/', [IndexController::class, 'index']);
 Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
 Route::resource('listing', ListingController::class);
-  // ->only(['create', 'store', 'edit', 'update', 'destroy'])
-  // ->middleware('auth');
+// ->only(['create', 'store', 'edit', 'update', 'destroy'])
+// ->middleware('auth');
 
 // Remaining routes are public, or use a __construct() method to apply middleware in the ListingController
 // Route::resource('listing', ListingController::class)
@@ -34,4 +34,4 @@ Route::post('login', [AuthController::class, 'store'])->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 
 Route::resource('user-account', UserAccountController::class)
-  ->only(['create']);
+  ->only(['create', 'store']);
