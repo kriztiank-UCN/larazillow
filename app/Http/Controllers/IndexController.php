@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function index()
     {   
         // dd(Listing::all());
-        dd(Auth::User());
+        // dd(Auth::User());
         return inertia('Index/Index', [
             'msg' => 'Hello, World!'
         ]);

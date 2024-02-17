@@ -20,7 +20,7 @@ class AuthController extends Controller
         if (!Auth::attempt($request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
-            // true - remember me until logout
+            // true - remember me indefinitely or until logout
         ]), true)) {
             throw ValidationException::withMessages([
                 'email' => 'Authentication failed'
@@ -28,8 +28,8 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
-
-        return redirect()->intended();
+        // intended redirects to the page that redirected the user to the login page
+        return redirect()->intended('/listing');
     }
 
     public function destroy()
