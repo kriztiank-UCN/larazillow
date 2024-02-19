@@ -1,6 +1,10 @@
 <template>
   <h1 class="text-3xl mb-4">Your Listings</h1>
-  <section class="mb-8">Filters</section>
+
+  <section class="mb-8">
+    <MyAccountFilters />
+  </section>
+
   <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
     <Box v-for="listing in listings" :key="listing.id">
       <div
@@ -31,6 +35,7 @@
 </template>
 
 <script setup>
+import MyAccountFilters from '@/Pages/MyAccount/Index/Components/MyAccountFilters.vue'
 import ListingAddress from "@/Components/ListingAddress.vue";
 import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
