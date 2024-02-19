@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\UserAccountController;
 
 // create a new route, a new controller method and a new view for each resource
@@ -35,3 +36,10 @@ Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 
 Route::resource('user-account', UserAccountController::class)
   ->only(['create', 'store']);
+
+  Route::prefix('my-account')
+  ->name('my-account.')
+  ->middleware('auth')
+  ->group(function () {
+    Route::resource('listing', MyAccountController::class);
+  });

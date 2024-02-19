@@ -15,7 +15,7 @@
         <!-- show this if logged in -->
         <div v-if="user" class="flex items-center gap-4">
           <!-- show the logged in users name in the navigation -->
-          <div class="text-sm text-gray-500">{{ user.name }}</div>
+          <Link class="text-sm text-gray-500" :href="route('my-account.listing.index')">{{ user.name }}</Link>
           <Link :href="route('listing.create')" class="btn-primary"
             >+ New Listing</Link
           >
