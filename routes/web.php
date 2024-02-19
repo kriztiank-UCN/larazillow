@@ -21,14 +21,13 @@ use App\Http\Controllers\UserAccountController;
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
-Route::resource('listing', ListingController::class);
-// ->only(['create', 'store', 'edit', 'update', 'destroy'])
-// ->middleware('auth');
+Route::resource('listing', ListingController::class)
+->only(['create', 'store', 'edit', 'update'])
+->middleware('auth');
 
-// Remaining routes are public, or use a __construct() method to apply middleware in the ListingController
-// Route::resource('listing', ListingController::class)
-//   ->except(['create', 'store', 'edit', 'update', 'destroy']);
-
+// Remaining routes 'index', 'show' are public, or use a __construct() method to apply middleware in the ListingController
+Route::resource('listing', ListingController::class)
+  ->except(['create', 'store', 'edit', 'update', 'destroy']);
 
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
@@ -41,5 +40,5 @@ Route::resource('user-account', UserAccountController::class)
   ->name('my-account.')
   ->middleware('auth')
   ->group(function () {
-    Route::resource('listing', MyAccountController::class);
+    Route::resource('listing', MyAccountController::class)->only(['index', 'destroy']);
   });

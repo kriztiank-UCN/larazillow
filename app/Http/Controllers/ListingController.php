@@ -19,7 +19,7 @@ class ListingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        // $this->middleware('auth')->except(['index', 'show']);
         // third way of authorizing the user, authorization rules are in the ListingPolicy.php
         $this->authorizeResource(Listing::class, 'listing');
     }
@@ -166,16 +166,5 @@ class ListingController extends Controller
 
         return redirect()->route('listing.index')
             ->with('success', 'Listing was changed!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Listing $listing)
-    {
-        $listing->delete();
-
-        return redirect()->back()
-            ->with('success', 'Listing was deleted!');
     }
 }
