@@ -14,12 +14,25 @@ class MyAccountController extends Controller
         // third way of authorizing the user, authorization rules are in the ListingPolicy.php
         $this->authorizeResource(Listing::class, 'listing');
     }
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->boolean('deleted'));
+        $filters = [
+            'deleted' => $request->boolean('deleted')
+        ];
+
         // dd(Auth::user()->listings);
         // Fetch the authenticated user's listings
-        return inertia('MyAccount/Index',
-        ['listings' => Auth::user()->listings]);
+        return inertia(
+            'MyAccount/Index',
+            [
+                'listings' => Auth::user()
+                    ->listings()
+                    ->mostRecent()
+                    ->filter($filters)
+                    ->get()
+            ]
+        );
     }
 
     /**
