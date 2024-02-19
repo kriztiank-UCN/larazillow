@@ -18,7 +18,9 @@ class MyAccountController extends Controller
     {
         // dd($request->boolean('deleted'));
         $filters = [
-            'deleted' => $request->boolean('deleted')
+            'deleted' => $request->boolean('deleted'),
+            // ...$request works like array_merge
+            ...$request->only(['by', 'order'])
         ];
 
         // dd(Auth::user()->listings);
@@ -28,7 +30,7 @@ class MyAccountController extends Controller
             [
                 'listings' => Auth::user()
                     ->listings()
-                    ->mostRecent()
+                    // ->mostRecent()
                     ->filter($filters)
                     ->get()
             ]
