@@ -19,7 +19,7 @@ use App\Http\Controllers\UserAccountController;
 // destroy - Delete listing in database
 
 Route::get('/', [IndexController::class, 'index']);
-Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
+// Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
 Route::resource('listing', ListingController::class)
 ->only(['create', 'store', 'edit', 'update'])
