@@ -19,8 +19,17 @@
           <ListingAddress :listing="listing" />
         </div>
         <div class="flex items-center gap-1 text-gray-600 dark:text-gray-300">
-          <!-- <Link class="btn-outline text-xs font-medium">Preview</Link> -->
-          <!-- <Link class="btn-outline text-xs font-medium">Edit</Link> -->
+          <a
+            class="btn-outline text-xs font-medium"
+            :href="route('listing.show', { listing: listing.id })"
+            target="_blank"
+            >Preview</a
+          >
+          <Link
+            class="btn-outline text-xs font-medium"
+            :href="route('my-account.listing.edit', { listing: listing.id })"
+            >Edit</Link
+          >
           <Link
             class="btn-outline text-xs font-medium"
             :href="route('my-account.listing.destroy', { listing: listing.id })"
@@ -33,7 +42,10 @@
     </Box>
   </section>
 
-  <section v-if="listings.data.length" class="w-full flex justify-center mt-4 mb-4">
+  <section
+    v-if="listings.data.length"
+    class="w-full flex justify-center mt-4 mb-4"
+  >
     <Pagination :links="listings.links" />
   </section>
 </template>
@@ -44,7 +56,7 @@ import ListingAddress from "@/Components/ListingAddress.vue";
 import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
-import Pagination from '@/Components/UI/Pagination.vue'
+import Pagination from "@/Components/UI/Pagination.vue";
 
 defineProps({
   listings: Object,
