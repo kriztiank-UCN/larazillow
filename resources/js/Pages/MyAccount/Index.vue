@@ -6,7 +6,7 @@
   </section>
 
   <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-    <Box v-for="listing in listings" :key="listing.id">
+    <Box v-for="listing in listings.data" :key="listing.id">
       <div
         class="flex flex-col md:flex-row gap-2 md:items-center justify-between"
       >
@@ -32,6 +32,10 @@
       </div>
     </Box>
   </section>
+
+  <section v-if="listings.data.length" class="w-full flex justify-center mt-4 mb-4">
+    <Pagination :links="listings.links" />
+  </section>
 </template>
 
 <script setup>
@@ -40,9 +44,10 @@ import ListingAddress from "@/Components/ListingAddress.vue";
 import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
+import Pagination from '@/Components/UI/Pagination.vue'
 
 defineProps({
-  listings: Array,
+  listings: Object,
   filters: Object,
 });
 </script>
