@@ -10,7 +10,7 @@
         <div
           class="text-xl text-indigo-600 dark:text-indigo-300 font-bold text-center"
         >
-          <Link :href="route('listing.index')">LaraZillow</Link>
+          <Link :href="route('listing.index')">Larabay</Link>
         </div>
         <!-- show this if logged in -->
         <div v-if="user" class="flex items-center gap-4">
