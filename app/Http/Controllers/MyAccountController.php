@@ -27,7 +27,8 @@ class MyAccountController extends Controller
         // Fetch the authenticated user's listings
         return inertia(
             'MyAccount/Index',
-            [
+            [   // pass the filters and the listings to the view
+                'filters' => $filters,
                 'listings' => Auth::user()
                     ->listings()
                     // ->mostRecent()

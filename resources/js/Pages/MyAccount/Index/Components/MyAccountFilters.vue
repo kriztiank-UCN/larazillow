@@ -5,7 +5,7 @@
         <input
           id="deleted"
           v-model="filterForm.deleted"
-          type="checkbox" 
+          type="checkbox"
           class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
         />
         <label for="deleted">Deleted</label>
@@ -18,8 +18,9 @@
         </select>
         <select v-model="filterForm.order" class="input-filter-r w-32">
           <option
-            v-for="option in sortOptions" 
-            :key="option.value" :value="option.value"
+            v-for="option in sortOptions"
+            :key="option.value"
+            :value="option.value"
           >
             {{ option.label }}
           </option>
@@ -30,39 +31,43 @@
 </template>
 
 <script setup>
-import { reactive, watch, computed  } from "vue";
+import { reactive, watch, computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import { debounce } from "lodash";
 
 const sortLabels = {
   created_at: [
     {
-      label: 'Latest',
-      value: 'desc',
+      label: "Latest",
+      value: "desc",
     },
     {
-      label: 'Oldest',
-      value: 'asc',
+      label: "Oldest",
+      value: "asc",
     },
   ],
   price: [
     {
-      label: 'Pricey',
-      value: 'desc',
+      label: "Pricey",
+      value: "desc",
     },
     {
-      label: 'Cheapest',
-      value: 'asc',
+      label: "Cheapest",
+      value: "asc",
     },
   ],
-}
+};
 
-const sortOptions = computed(() => sortLabels[filterForm.by])
+const sortOptions = computed(() => sortLabels[filterForm.by]);
+
+const props = defineProps({
+  filters: Object,
+});
 
 const filterForm = reactive({
-  deleted: false,
-  by: 'created_at',
-  order: 'desc',
+  deleted: props.filters.deleted ?? false,
+  by: props.filters.by ?? "created_at",
+  order: props.filters.order ?? "desc",
 });
 
 watch(
