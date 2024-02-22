@@ -6,11 +6,12 @@
   </section>
 
   <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-    <Box v-for="listing in listings.data" :key="listing.id">
+    <!-- if listing.deleted_at is true, add a border-dashed class to the Box component -->
+    <Box v-for="listing in listings.data" :key="listing.id" :class="{ 'border-dashed': listing.deleted_at }">
       <div
         class="flex flex-col md:flex-row gap-2 md:items-center justify-between"
       >
-        <div>
+      <div :class="{ 'opacity-25': listing.deleted_at }">
           <div class="xl:flex items-center gap-2">
             <Price :price="listing.price" class="text-2xl font-medium" />
             <ListingSpace :listing="listing" />
@@ -30,13 +31,25 @@
             :href="route('my-account.listing.edit', { listing: listing.id })"
             >Edit</Link
           >
+          <!-- if listing.deleted_at is false, show the delete button -->
           <Link
+            v-if="!listing.deleted_at"
             class="btn-outline text-xs font-medium"
             :href="route('my-account.listing.destroy', { listing: listing.id })"
             as="button"
             method="delete"
             >Delete</Link
           >
+          <!-- else show the restore button -->
+          <Link
+            v-else 
+            class="btn-outline text-xs font-medium" 
+            :href="route('my-account.listing.restore', { listing: listing.id })" 
+            as="button" 
+            method="put"
+          >
+            Restore
+          </Link>
         </div>
       </div>
     </Box>

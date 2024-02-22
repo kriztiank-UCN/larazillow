@@ -36,5 +36,9 @@ Route::prefix('my-account')
   ->name('my-account.')
   ->middleware('auth')
   ->group(function () {
-    Route::resource('listing', MyAccountController::class)->only(['index', 'destroy', 'edit', 'update', 'create', 'store']);
+    Route::name('listing.restore')->put(
+      'listing/{listing}/restore',
+      [MyAccountController::class, 'restore']
+    )->withTrashed();
+    Route::resource('listing', MyAccountController::class)->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])->withTrashed();
   });
