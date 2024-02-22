@@ -24,14 +24,14 @@ Route::get('/', [IndexController::class, 'index']);
 // public routes
 Route::resource('listing', ListingController::class)
   ->only(['index', 'show']);
-
+// login/logout
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
 Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
-
+// register
 Route::resource('user-account', UserAccountController::class)
   ->only(['create', 'store']);
-
+// authenticated routes
 Route::prefix('my-account')
   ->name('my-account.')
   ->middleware('auth')
