@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MyAccountController;
@@ -40,5 +41,9 @@ Route::prefix('my-account')
       'listing/{listing}/restore',
       [MyAccountController::class, 'restore']
     )->withTrashed();
+
     Route::resource('listing', MyAccountController::class)->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])->withTrashed();
+
+    Route::resource('listing.image', ImageController::class)->only([ 'create', 'store']);
+
   });
