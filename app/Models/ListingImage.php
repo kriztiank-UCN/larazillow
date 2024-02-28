@@ -10,6 +10,7 @@ class ListingImage extends Model
 {
     use HasFactory;
 
+    protected $appends = ['src'];
     protected $fillable = ['filename'];
     // An image belongs to a listing, and a listing can have many images
     // Laravel has a mechanism to automatically figure out the column name to use for the foreign key.
@@ -17,5 +18,11 @@ class ListingImage extends Model
     public function listing(): BelongsTo
     {
         return $this->belongsTo(Listing::class);
+    }
+
+    // getRealSrcAttribute -> real_src
+    public function getSrcAttribute()
+    {
+        return asset("storage/{$this->filename}");
     }
 }
