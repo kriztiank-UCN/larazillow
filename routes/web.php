@@ -44,6 +44,6 @@ Route::prefix('my-account')
 
     Route::resource('listing', MyAccountController::class)->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])->withTrashed();
 
-    Route::resource('listing.image', ImageController::class)->only([ 'create', 'store']);
+    Route::resource('listing.image', ImageController::class)->only(['create', 'store', 'destroy']);
 
   });
