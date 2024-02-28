@@ -98,6 +98,9 @@ class ListingController extends Controller
         // #2
         // $this->authorize('view', $listing);
 
+        // load the images relationship, all the related images.
+        $listing->load(['images']);
+
         return inertia('Listing/Show', [
             'listing' => $listing
         ]);

@@ -11,6 +11,7 @@ class ImageController extends Controller
 {
     public function create(Listing $listing)
     {
+        // load the images relationship, all the related images.
         $listing->load(['images']);
         return inertia(
             'MyAccount/ListingImage/Create',
@@ -34,7 +35,7 @@ class ImageController extends Controller
         return redirect()->back()->with('success', 'Images uploaded!');
     }
 
-    public function destroy(Listing $listing, ListingImage $image)
+    public function destroy($listing, ListingImage $image)
     {
         Storage::disk('public')->delete($image->filename);
         $image->delete();
