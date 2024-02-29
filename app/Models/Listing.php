@@ -34,6 +34,12 @@ class Listing extends Model
         return $this->hasMany(ListingImage::class);
     }
 
+    public function offers(): HasMany
+    {
+        // listing has many offers, specify foreign key listing_id
+        return $this->hasMany(Offer::class, 'listing_id');
+    }
+
     public function scopeMostRecent(Builder $query): Builder
     {
         return $query->orderByDesc('created_at');
