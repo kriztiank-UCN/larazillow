@@ -22,6 +22,13 @@ class ImageController extends Controller
     public function store(Listing $listing, Request $request)
     {
         if ($request->hasFile('images')) {
+            $request->validate([
+                // a wildcard .* validates each file in the array with a wildcard
+                'images.*' => 'mimes:jpg,png,jpeg,webp|max:5000'
+            ], [
+                // custom error message
+                'images.*.mimes' => 'The file should be in one of the formats: jpg, png, jpeg, webp'
+            ]);
             // store each image in the public disk
             foreach ($request->file('images') as $file) {
                 $path = $file->store('images', 'public');

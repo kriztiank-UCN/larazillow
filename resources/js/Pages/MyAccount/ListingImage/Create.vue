@@ -18,6 +18,12 @@
         </button>
         <button type="reset" class="btn-outline" @click="reset">Reset</button>
       </section>
+      <!-- If there are any errors in the imageErrors array, iterate over them and display -->
+      <div v-if="imageErrors.length" class="input-error">
+        <div v-for="(error, index) in imageErrors" :key="index">
+          {{ error }}
+        </div>
+      </div>
     </form>
   </Box>
   <!-- Show Listing Images -->
@@ -43,10 +49,15 @@
 import { computed } from "vue";
 import Box from "@/Components/UI/Box.vue";
 import { useForm } from "@inertiajs/vue3";
+
 const props = defineProps({ listing: Object });
+
 const form = useForm({
   images: [],
 });
+// Convert errors object to an array
+const imageErrors = computed(() => Object.values(form.errors))
+
 // If there's no files in the form's images array, the upload button should be disabled
 const canUpload = computed(() => form.images.length);
 const upload = () => {
