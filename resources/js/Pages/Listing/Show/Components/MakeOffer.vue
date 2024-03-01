@@ -9,7 +9,7 @@
           type="range"
           :min="min"
           :max="max"
-          step="10000"
+          step="1000"
           class="mt-2 w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
         />
 

@@ -67,12 +67,16 @@
           </div>
         </div>
       </Box>
+      <!-- if the user is authenticated, show the MakeOffer component -->
       <!-- Passing data to child component using props -->
       <MakeOffer
+        v-if="user"
         :listing-id="listing.id"
         :price="listing.price"
         @offer-updated="offer = $event"
       />
+      <!-- <OfferMade v-if="user && offerMade" :offer="offerMade" /> -->
+      <OfferMade :offer="offerMade" />
     </div>
   </div>
 </template>
@@ -84,7 +88,8 @@ import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
 import MakeOffer from "@/Pages/Listing/Show/Components/MakeOffer.vue";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
 import { useMonthlyPayment } from "@/Composables/useMonthlyPayment";
 
@@ -92,7 +97,9 @@ const interestRate = ref(2.5);
 const duration = ref(25);
 
 const props = defineProps({
+  // Receive the listing and offerMade props from the ListingController
   listing: Object,
+  offerMade: Object,
 });
 
 // Create a new reactive variable to store the offer
@@ -103,4 +110,7 @@ const { monthlyPayment, totalPaid, totalInterest } = useMonthlyPayment(
   interestRate,
   duration
 );
+// if the user is authenticated, show the MakeOffer component
+const page = usePage();
+const user = computed(() => page.props.user);
 </script>

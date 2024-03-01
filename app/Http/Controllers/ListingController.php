@@ -77,12 +77,11 @@ class ListingController extends Controller
             [
                 'filters' => $filters,
                 'listings' => Listing::mostRecent()
-                ->filter($filters)
-                ->paginate(10)
-                ->withQueryString()
+                    ->filter($filters)
+                    ->paginate(10)
+                    ->withQueryString()
             ]
         );
-
     }
 
     /**
@@ -100,9 +99,15 @@ class ListingController extends Controller
 
         // load the images relationship, all the related images.
         $listing->load(['images']);
+        // Get the offer made by the authenticated user
+        $offer = !Auth::user() ?
+            null : $listing->offers()->byMe()->first();
 
         return inertia('Listing/Show', [
-            'listing' => $listing
+            // pass the data as props in an listing variable
+            'listing' => $listing,
+            // pass the data as props in an offerMade variable
+            'offerMade' => $offer
         ]);
     }
 }
