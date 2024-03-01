@@ -16,16 +16,16 @@ class Offer extends Model
 
     public function listing(): BelongsTo
     {
-        // offer belongs to a listing
+        // Offer belongs to a listing
         return $this->belongsTo(Listing::class, 'listing_id');
     }
 
     public function bidder(): BelongsTo
-    { 
-        // offer belongs to a bidder
+    {
+        // Offer belongs to a bidder
         return $this->belongsTo(User::class, 'bidder_id');
     }
-
+    // Local Scope Method
     public function scopeByMe(Builder $query): Builder
     {
         return $query->where('bidder_id', Auth::user()?->id);

@@ -104,9 +104,9 @@ class ListingController extends Controller
             null : $listing->offers()->byMe()->first();
 
         return inertia('Listing/Show', [
-            // pass the data as props in an listing variable
+            // Pass the data as props in an listing variable
             'listing' => $listing,
-            // pass the data as props in an offerMade variable
+            // Pass the data as props in an offerMade variable
             'offerMade' => $offer
         ]);
     }

@@ -67,16 +67,16 @@
           </div>
         </div>
       </Box>
-      <!-- if the user is authenticated, show the MakeOffer component -->
+      <!-- if the user is authenticated and the offerMade is falsy, show the MakeOffer component -->
       <!-- Passing data to child component using props -->
       <MakeOffer
-        v-if="user"
+        v-if="user && !offerMade"
         :listing-id="listing.id"
         :price="listing.price"
         @offer-updated="offer = $event"
       />
-      <!-- <OfferMade v-if="user && offerMade" :offer="offerMade" /> -->
-      <OfferMade :offer="offerMade" />
+      <!-- if the user is authenticated and the offerMade is truthy, show the OfferMade component -->
+      <OfferMade v-if="user && offerMade" :offer="offerMade" />
     </div>
   </div>
 </template>
@@ -87,11 +87,12 @@ import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
 import MakeOffer from "@/Pages/Listing/Show/Components/MakeOffer.vue";
+import OfferMade from './Show/Components/OfferMade.vue'
+import { useMonthlyPayment } from "@/Composables/useMonthlyPayment";
 
 import { ref, computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-import { useMonthlyPayment } from "@/Composables/useMonthlyPayment";
 
 const interestRate = ref(2.5);
 const duration = ref(25);
