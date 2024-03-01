@@ -7,6 +7,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\ListingOfferController;
 
 // create a new route, a new controller method and a new view for each resource
 
@@ -25,6 +26,11 @@ Route::get('/', [IndexController::class, 'index']);
 // public routes
 Route::resource('listing', ListingController::class)
   ->only(['index', 'show']);
+
+  Route::resource('listing.offer', ListingOfferController::class)
+  ->middleware('auth')
+  ->only(['store']);
+
 // login/logout
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
