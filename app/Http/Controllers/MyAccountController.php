@@ -46,7 +46,8 @@ class MyAccountController extends Controller
         return inertia(
             'MyAccount/Show',
             // load the offers relationship with the listing
-            ['listing' => $listing->load('offers')]
+            // loading all the offers and then all the bidders from the offers.
+            ['listing' => $listing->load('offers', 'offers.bidder')]
         );
     }
 

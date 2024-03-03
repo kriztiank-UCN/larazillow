@@ -11,7 +11,7 @@
         </div>
 
         <div class="text-gray-500 text-sm">
-          Made by John Doe
+          Made by {{ offer.bidder.name }}
         </div>
 
         <div class="text-gray-500 text-sm">
@@ -19,9 +19,11 @@
         </div>
       </div>
       <div>
+        <!-- :href="route('my-account.offer.accept', { offer: offer.id })" -->
         <Link
+          :href="route('my-account.offer.accept', offer.id)"
           class="btn-outline text-xs font-medium" 
-          as="button"
+          as="button" method="put"
         >
           Accept
         </Link>

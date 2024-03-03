@@ -5,9 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\MyAccountController;
-use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\ListingOfferController;
+use App\Http\Controllers\MyAccountController;
+use App\Http\Controllers\MyAccountAcceptOfferController;
+use App\Http\Controllers\UserAccountController;
 
 // create a new route, a new controller method and a new view for each resource
 
@@ -52,6 +53,13 @@ Route::prefix('my-account')
     Route::resource('listing', MyAccountController::class)
     // ->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])
     ->withTrashed();
+
+    // Single Action Controller
+    Route::name('offer.accept')
+    ->put(
+      'offer/{offer}/accept',
+      MyAccountAcceptOfferController::class
+    );
 
     Route::resource('listing.image', ImageController::class)->only(['create', 'store', 'destroy']);
 

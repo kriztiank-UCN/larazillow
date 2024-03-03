@@ -25,9 +25,19 @@ class Offer extends Model
         // Offer belongs to a bidder
         return $this->belongsTo(User::class, 'bidder_id');
     }
+    // Scopes allow developers to add constraints to queries for a given model.
     // Local Scope Method
+    // TODO watch scope videos again???
+    // get the bidder_id from the authenticated user
+    // get all the offers by the authenticated user, used in ListingController.php as byMe()
     public function scopeByMe(Builder $query): Builder
     {
         return $query->where('bidder_id', Auth::user()?->id);
+    }
+    // 146.Accepting Offers (Single Action Controller & Loading Nested Relations)
+    // get all the offers except a specific offer, used in MyAccountAcceptOfferController.php as except()
+    public function scopeExcept(Builder $query, Offer $offer): Builder
+    {
+        return $query->where('id', '!=', $offer->id);
     }
 }
