@@ -48,7 +48,10 @@ Route::prefix('my-account')
       [MyAccountController::class, 'restore']
     )->withTrashed();
 
-    Route::resource('listing', MyAccountController::class)->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])->withTrashed();
+    // Complete set of resource routes
+    Route::resource('listing', MyAccountController::class)
+    // ->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])
+    ->withTrashed();
 
     Route::resource('listing.image', ImageController::class)->only(['create', 'store', 'destroy']);
 

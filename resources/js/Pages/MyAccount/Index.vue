@@ -61,7 +61,7 @@
               Restore
             </Link>
           </div>
-
+          <!-- Show images count -->
           <div class="mt-2">
             <Link
               :href="
@@ -71,6 +71,15 @@
               "
               class="block w-full btn-outline text-xs font-medium text-center"
               >Images ({{ listing.images_count }})
+            </Link>
+          </div>
+          <!-- Show offers count -->
+          <div class="mt-2">
+            <Link
+              :href="route('my-account.listing.show', { listing: listing.id })"
+              class="block w-full btn-outline text-xs font-medium text-center"
+            >
+              Offers ({{ listing.offers_count }})
             </Link>
           </div>
         </section>
