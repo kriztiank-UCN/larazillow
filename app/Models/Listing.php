@@ -48,12 +48,8 @@ class Listing extends Model
     // use this scope to get only listings that are not sold, used in ListingController.php
     public function scopeWithoutSold(Builder $query): Builder
     {
-        return $query->doesntHave('offers')
-            ->orWhereHas(
-                'offers',
-                fn (Builder $query) => $query->whereNull('accepted_at')
-                    ->whereNull('rejected_at')
-            );
+        // when the sold_at column is null, the listing is not sold
+        return $query->whereNull('sold_at');
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder
