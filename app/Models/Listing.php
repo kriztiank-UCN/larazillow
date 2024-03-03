@@ -45,6 +45,17 @@ class Listing extends Model
         return $query->orderByDesc('created_at');
     }
 
+    // use this scope to get only listings that are not sold, used in ListingController.php
+    public function scopeWithoutSold(Builder $query): Builder
+    {
+        return $query->doesntHave('offers')
+            ->orWhereHas(
+                'offers',
+                fn (Builder $query) => $query->whereNull('accepted_at')
+                    ->whereNull('rejected_at')
+            );
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->when(

@@ -78,6 +78,8 @@ class ListingController extends Controller
                 'filters' => $filters,
                 'listings' => Listing::mostRecent()
                     ->filter($filters)
+                    // only show listings that are not sold
+                    ->withoutSold()
                     ->paginate(10)
                     ->withQueryString()
             ]
