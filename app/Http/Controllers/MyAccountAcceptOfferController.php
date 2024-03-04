@@ -10,14 +10,18 @@ class MyAccountAcceptOfferController extends Controller
     // __invoke is the way in Laravel to define controllers that only have one single action "Single Action Controller"
     public function __invoke(Offer $offer)
     {
+        // Get the listing from the offer, and authorize the user to update it
+        $listing = $offer->listing;
+        $this->authorize('update', $listing);
+
         // Accept selected offer
         $offer->update(['accepted_at' => now()]);
 
-        $offer->listing->sold_at = now();
-        $offer->listing->save();
+        $listing->sold_at = now();
+        $listing->save();
 
         // Reject all other offers
-        $offer->listing->offers()->except($offer)
+        $listing->offers()->except($offer)
             ->update(['rejected_at' => now()]);
 
         return redirect()->back()

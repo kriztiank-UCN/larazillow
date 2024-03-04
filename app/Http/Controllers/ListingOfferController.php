@@ -10,7 +10,9 @@ class ListingOfferController extends Controller
 {
     public function store(Listing $listing, Request $request)
     {
-        // storing new offer that's associated with the current user to the listing model 
+        // Call the view policy method with the current user, which means you will be only able to submit an offer if the listing is not sold.
+        $this->authorize('view', $listing);
+        // Storing new offer that's associated with the current user to the listing model 
         $listing->offers()->save(
             Offer::make(
                 $request->validate([
