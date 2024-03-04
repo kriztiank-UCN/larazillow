@@ -10,7 +10,6 @@ class MyAccountController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth')->except(['index', 'show']);
         // third way of authorizing the user, authorization rules are in the ListingPolicy.php
         $this->authorizeResource(Listing::class, 'listing');
     }
