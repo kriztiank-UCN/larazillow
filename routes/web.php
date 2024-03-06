@@ -5,10 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\ListingOfferController;
 use App\Http\Controllers\MyAccountController;
-use App\Http\Controllers\MyAccountAcceptOfferController;
 use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\ListingOfferController;
+use App\Http\Controllers\MyAccountAcceptOfferController;
+use App\Http\Controllers\NotificationController;
 
 // create a new route, a new controller method and a new view for each resource
 
@@ -28,7 +29,7 @@ Route::get('/', [IndexController::class, 'index']);
 Route::resource('listing', ListingController::class)
   ->only(['index', 'show']);
 
-  Route::resource('listing.offer', ListingOfferController::class)
+Route::resource('listing.offer', ListingOfferController::class)
   ->middleware('auth')
   ->only(['store']);
 
@@ -39,7 +40,15 @@ Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
 // register
 Route::resource('user-account', UserAccountController::class)
   ->only(['create', 'store']);
+
 // authenticated routes
+
+// notifications
+Route::resource('notification', NotificationController::class)
+  ->middleware('auth')
+  ->only(['index']);
+
+// my-account
 Route::prefix('my-account')
   ->name('my-account.')
   ->middleware('auth')
@@ -51,16 +60,15 @@ Route::prefix('my-account')
 
     // Complete set of resource routes
     Route::resource('listing', MyAccountController::class)
-    // ->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])
-    ->withTrashed();
+      // ->only(['index', 'destroy', 'edit', 'update', 'create', 'store'])
+      ->withTrashed();
 
     // Single Action Controller
     Route::name('offer.accept')
-    ->put(
-      'offer/{offer}/accept',
-      MyAccountAcceptOfferController::class
-    );
+      ->put(
+        'offer/{offer}/accept',
+        MyAccountAcceptOfferController::class
+      );
 
     Route::resource('listing.image', ImageController::class)->only(['create', 'store', 'destroy']);
-
   });

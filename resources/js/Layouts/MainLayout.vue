@@ -15,7 +15,10 @@
         <!-- show this if logged in -->
         <div v-if="user" class="flex items-center gap-4">
           <!-- show notifications if there are any -->
-          <div class="text-gray-500 relative pr-2 py-2 text-lg">
+          <Link
+            class="text-gray-500 relative pr-2 py-2 text-lg"
+            :href="route('notification.index')"
+          >
             🔔
             <div
               v-if="notificationCount"
@@ -23,7 +26,7 @@
             >
               {{ notificationCount }}
             </div>
-          </div>
+          </Link>
           <!-- show the logged in users name in the navigation -->
           <Link
             class="text-sm text-gray-500"
