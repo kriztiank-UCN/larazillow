@@ -5,7 +5,7 @@
     <MyAccountFilters :filters="filters" />
   </section>
 
-  <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+  <section v-if="listings.data.length" class="grid grid-cols-1 lg:grid-cols-2 gap-2">
     <!-- if listing.deleted_at is true, add a border-dashed class to the Box component -->
     <Box
       v-for="listing in listings.data"
@@ -93,6 +93,8 @@
     </Box>
   </section>
 
+  <EmptyState v-else>No listings yet</EmptyState>
+
   <section
     v-if="listings.data.length"
     class="w-full flex justify-center mt-4 mb-4"
@@ -108,6 +110,7 @@ import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
 import Pagination from "@/Components/UI/Pagination.vue";
+import EmptyState from "@/Components/UI/EmptyState.vue";
 
 defineProps({
   listings: Object,
