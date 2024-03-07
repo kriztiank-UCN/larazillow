@@ -8,8 +8,9 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\ListingOfferController;
-use App\Http\Controllers\MyAccountAcceptOfferController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationSeenController;
+use App\Http\Controllers\MyAccountAcceptOfferController;
 
 // create a new route, a new controller method and a new view for each resource
 
@@ -47,6 +48,11 @@ Route::resource('user-account', UserAccountController::class)
 Route::resource('notification', NotificationController::class)
   ->middleware('auth')
   ->only(['index']);
+
+Route::put(
+  'notification/{notification}/seen',
+  NotificationSeenController::class
+)->middleware('auth')->name('notification.seen');
 
 // my-account
 Route::prefix('my-account')
