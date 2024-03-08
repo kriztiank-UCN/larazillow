@@ -11,6 +11,7 @@ use App\Http\Controllers\ListingOfferController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationSeenController;
 use App\Http\Controllers\MyAccountAcceptOfferController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 // create a new route, a new controller method and a new view for each resource
 
@@ -26,23 +27,12 @@ use App\Http\Controllers\MyAccountAcceptOfferController;
 Route::get('/', [IndexController::class, 'index']);
 // Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
-// public routes
 Route::resource('listing', ListingController::class)
   ->only(['index', 'show']);
 
 Route::resource('listing.offer', ListingOfferController::class)
   ->middleware('auth')
   ->only(['store']);
-
-// login/logout
-Route::get('login', [AuthController::class, 'create'])->name('login');
-Route::post('login', [AuthController::class, 'store'])->name('login.store');
-Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
-// register
-Route::resource('user-account', UserAccountController::class)
-  ->only(['create', 'store']);
-
-// authenticated routes
 
 // notifications
 Route::resource('notification', NotificationController::class)
@@ -54,10 +44,33 @@ Route::put(
   NotificationSeenController::class
 )->middleware('auth')->name('notification.seen');
 
+// login/logout
+Route::get('login', [AuthController::class, 'create'])->name('login');
+Route::post('login', [AuthController::class, 'store'])->name('login.store');
+Route::delete('logout', [AuthController::class, 'destroy'])->name('logout');
+
+// register
+Route::resource('user-account', UserAccountController::class)
+  ->only(['create', 'store']);
+
+// emal verification  
+Route::get('/email/verify', function () {
+  return inertia('Auth/VerifyEmail');
+})->middleware('auth')->name('verification.notice');
+
+// https://laravel.com/docs/10.x/verification#the-email-verification-handler
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+  $request->fulfill();
+
+  return redirect()->route('listing.index')
+    ->with('success', 'Email was verified!');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
 // my-account
 Route::prefix('my-account')
   ->name('my-account.')
-  ->middleware('auth')
+  // ->middleware('auth')
+  ->middleware(['auth', 'verified'])
   ->group(function () {
     Route::name('listing.restore')->put(
       'listing/{listing}/restore',
