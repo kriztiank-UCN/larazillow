@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageController;
@@ -65,6 +66,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
   return redirect()->route('listing.index')
     ->with('success', 'Email was verified!');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// https://laravel.com/docs/10.x/verification#resending-the-verification-email
+Route::post('/email/verification-notification', function (Request $request) {
+  $request->user()->sendEmailVerificationNotification();
+
+  return back()->with('success', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // my-account
 Route::prefix('my-account')
